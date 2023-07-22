@@ -49,6 +49,13 @@ public class UrlsController {
     };
 
     public static Handler showUrl = ctx -> {
+        long id = ctx.pathParamAsClass("id", Long.class).getOrDefault(null);
 
+        Url url = new QUrl()
+                .id.equalTo(id)
+                .findOne();
+
+        ctx.attribute("url", url);
+        ctx.render("urls/url.html");
     };
 }
