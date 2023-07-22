@@ -1,13 +1,17 @@
 package hexlet.code.controllers;
 
 import hexlet.code.domain.Url;
+import hexlet.code.domain.query.QUrl;
 import io.javalin.http.Handler;
 import java.net.URL;
 import java.util.List;
 
 public class UrlsController {
     public static Handler listUrl = ctx -> {
-        
+        List<Url> urls = new QUrl().findList();
+
+        ctx.attribute("urls", urls);
+        ctx.render("urls/index.html");
     };
 
     public static Handler createUrl = ctx -> {
@@ -27,10 +31,19 @@ public class UrlsController {
         String normalizedUrl = (parsedUrl.getProtocol() + "://" + parsedUrl.getHost() + port)
                 .toLowerCase();
 
-        Url newUrl = new Url(normalizedUrl);
-        newUrl.save();
-        ctx.sessionAttribute("flash", "Страница успешно добавлена");
-        ctx.sessionAttribute("flash-type", "success");
+        Url url = new QUrl()
+                .name.equalTo(normalizedUrl)
+                .findOne();
+
+        if (url == null) {
+            Url newUrl = new Url(normalizedUrl);
+            newUrl.save();
+            ctx.sessionAttribute("flash", "Страница успешно добавлена");
+            ctx.sessionAttribute("flash-type", "success");
+        } else {
+            ctx.sessionAttribute("flash", "Страница уже существует");
+            ctx.sessionAttribute("flash-type", "info");
+        }
 
         ctx.redirect("/urls");
     };
