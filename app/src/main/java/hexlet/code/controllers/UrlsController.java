@@ -3,6 +3,8 @@ package hexlet.code.controllers;
 import hexlet.code.domain.Url;
 import hexlet.code.domain.query.QUrl;
 import io.javalin.http.Handler;
+import io.javalin.http.NotFoundResponse;
+
 import java.net.URL;
 import java.util.List;
 
@@ -54,6 +56,10 @@ public class UrlsController {
         Url url = new QUrl()
                 .id.equalTo(id)
                 .findOne();
+
+        if (url == null) {
+            throw new NotFoundResponse();
+        }
 
         ctx.attribute("url", url);
         ctx.render("urls/url.html");
