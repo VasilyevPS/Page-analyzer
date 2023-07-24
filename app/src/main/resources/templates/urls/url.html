@@ -8,37 +8,45 @@
 
       <table class="table table-bordered table-hover mt-3">
         <tbody>
-        <tr>
-          <td>ID</td>
-          <td th:text="*{getId()}"></td>
-        </tr>
-        <tr>
-          <td>Имя</td>
-          <td th:text="*{getName()}"></td>
-        </tr>
-        <tr>
-          <td>Дата создания</td>
-          <td th:text="*{getCreatedAt()}"></td>
-        </tr>
+          <tr>
+            <td>ID</td>
+            <td th:text="*{getId()}"></td>
+          </tr>
+          <tr>
+            <td>Имя</td>
+            <td th:text="*{getName()}"></td>
+          </tr>
+          <tr>
+            <td>Дата создания</td>
+            <td th:text="${#temporals.format(url.getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></td>
+          </tr>
         </tbody>
       </table>
 
       <h2 class="mt-5">Проверки</h2>
-      <form method="post" action="/urls/1/checks">
+      <form method="post" th:action="@{/urls/{id}/checks(id=${url.getId()})}">
         <button type="submit" class="btn btn-primary">Запустить проверку</button>
       </form>
 
       <table class="table table-bordered table-hover mt-3">
         <thead>
-        <tr><th class="col-1">ID</th>
-          <th class="col-1">Код ответа</th>
-          <th>title</th>
-          <th>h1</th>
-          <th>description</th>
-          <th class="col-2">Дата проверки</th>
-        </tr></thead>
+          <tr><th class="col-1">ID</th>
+            <th class="col-1">Код ответа</th>
+            <th>title</th>
+            <th>h1</th>
+            <th>description</th>
+            <th class="col-2">Дата проверки</th>
+          </tr>
+        </thead>
         <tbody>
-
+          <tr th:each="urlCheck : ${url.getUrlChecks()}">
+            <td th:text="${urlCheck.getId()}"></td>
+            <td th:text="${urlCheck.getStatusCode()}"></td>
+            <td th:text="${#strings.abbreviate(urlCheck.getTitle(), 20)}"></td>
+            <td th:text="${#strings.abbreviate(urlCheck.getH1(), 20)}"></td>
+            <td th:text="${#strings.abbreviate(urlCheck.getDescription(), 50)}"></td>
+            <td th:text="${#temporals.format(urlCheck.getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></td>
+          </tr>
         </tbody>
       </table>
     </div>

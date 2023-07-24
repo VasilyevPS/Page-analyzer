@@ -50,10 +50,10 @@ public class App {
                 post(UrlsController.createUrl);
                 path("{id}", () -> {
                     get(UrlsController.showUrl);
+                    post("/checks", UrlsController.checkUrl);
                 });
             });
         });
-        // END
     }
 
     public static Javalin getApp() {
