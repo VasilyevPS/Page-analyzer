@@ -37,9 +37,10 @@ public class UrlsController {
             return;
         }
 
+        String protocol = parsedUrl.getProtocol();
+        String host = parsedUrl.getHost();
         String port = parsedUrl.getPort() != -1 ? ":" + parsedUrl.getPort() : "";
-        String normalizedUrl = (parsedUrl.getProtocol() + "://" + parsedUrl.getHost() + port)
-                .toLowerCase();
+        String normalizedUrl = (protocol + "://" + host + port).toLowerCase();
 
         Url url = new QUrl()
                 .name.equalTo(normalizedUrl)
@@ -107,13 +108,8 @@ public class UrlsController {
         } catch (Exception e) {
             ctx.sessionAttribute("flash", e.getMessage());
             ctx.sessionAttribute("flash-type", "danger");
-            if (e.getMessage().contains("UnknownHostException")) {
-                ctx.sessionAttribute("flash", "Некорректный адрес");
-            }
         }
 
-        ctx.redirect("/urls/" + url.getId());
+        ctx.redirect("/urls/" + id);
     };
-
-
 }
