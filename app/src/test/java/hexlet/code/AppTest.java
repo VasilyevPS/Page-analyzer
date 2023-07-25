@@ -72,10 +72,9 @@ class AppTest {
             HttpResponse<String> response = Unirest
                     .get(baseUrl + "/urls")
                     .asString();
-            String body = response.getBody();
 
             assertThat(response.getStatus()).isEqualTo(200);
-            assertThat(body).contains("https://github.com");
+            assertThat(response.getBody()).contains("https://github.com");
         }
 
         @Test
@@ -91,10 +90,9 @@ class AppTest {
             HttpResponse<String> response = Unirest
                     .get(baseUrl + "/urls")
                     .asString();
-            String body = response.getBody();
 
             assertThat(response.getStatus()).isEqualTo(200);
-            assertThat(body.contains("Страница успешно добавлена"));
+            assertThat(response.getBody()).contains("Страница успешно добавлена");
 
             Url url = new QUrl()
                     .name.equalTo(inputUrl)
@@ -117,10 +115,9 @@ class AppTest {
             HttpResponse<String> response = Unirest
                     .get(baseUrl + "/urls")
                     .asString();
-            String body = response.getBody();
 
             assertThat(response.getStatus()).isEqualTo(200);
-            assertThat(body.contains("Страница уже существует"));
+            assertThat(response.getBody()).contains("Страница уже существует");
         }
 
         @Test
@@ -136,10 +133,9 @@ class AppTest {
             HttpResponse<String> response = Unirest
                     .get(baseUrl + "/urls")
                     .asString();
-            String body = response.getBody();
 
             assertThat(response.getStatus()).isEqualTo(200);
-            assertThat(body.contains("Некорректный URL"));
+            assertThat(response.getBody()).contains("Некорректный URL");
         }
 
         @Test
@@ -147,9 +143,9 @@ class AppTest {
             HttpResponse<String> response = Unirest
                     .get(baseUrl + "/urls/1")
                     .asString();
-            String body = response.getBody();
+
             assertThat(response.getStatus()).isEqualTo(200);
-            assertThat(body).contains("https://github.com");
+            assertThat(response.getBody()).contains("https://github.com");
         }
 
         @Test
@@ -157,7 +153,7 @@ class AppTest {
             HttpResponse<String> response = Unirest
                     .get(baseUrl + "/urls/1000")
                     .asString();
-            String body = response.getBody();
+
             assertThat(response.getStatus()).isEqualTo(404);
         }
     }
@@ -197,7 +193,7 @@ class AppTest {
         assertThat(urlcheck.getStatusCode()).isEqualTo(200);
         assertThat(urlcheck.getTitle()).isEqualTo("Test page");
         assertThat(urlcheck.getH1()).isEqualTo("Test header");
-        assertThat(urlcheck.getDescription()).contains("This page was created for tests.");
+        assertThat(urlcheck.getDescription()).isEqualTo("This page was created for tests.");
     }
 
     @Test
@@ -214,6 +210,6 @@ class AppTest {
                 .asString();
 
         assertThat(response.getStatus()).isEqualTo(200);
-        assertThat(response.getBody().contains("Exception"));
+        assertThat(response.getBody()).contains("Exception");
     }
 }
