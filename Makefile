@@ -20,7 +20,7 @@ generate-migrations:
 	make -C app generate-migrations
 
 lint:
-	make -C lint
+	make -C app lint
 
 test:
 	make -C app test
