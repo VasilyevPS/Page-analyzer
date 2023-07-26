@@ -8,4 +8,4 @@
 [Page analyzer](https://vasilyevps-page-analyzer.onrender.com) – a website that analyzes the specified pages for SEO suitability.
 
 ## Stack
-Javalin, Ebean, H2, PostgreSQL, JUnit, Thymeleaf, Bootstrap.
+Javalin, Ebean, H2, PostgreSQL, JUnit, MockWebServer, Thymeleaf, Bootstrap.
