@@ -3,11 +3,13 @@ package hexlet.code.controllers;
 import hexlet.code.domain.Url;
 import hexlet.code.domain.UrlCheck;
 import hexlet.code.domain.query.QUrl;
+import io.ebean.PagedList;
 import io.javalin.http.Handler;
 import io.javalin.http.NotFoundResponse;
 
 import java.net.URL;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
@@ -18,9 +20,28 @@ import org.jsoup.nodes.Element;
 
 public class UrlsController {
     public static Handler listUrl = ctx -> {
-        List<Url> urls = new QUrl().findList();
+        int page = ctx.queryParamAsClass("page", Integer.class).getOrDefault(1);
+        int rowsPerPage = 10;
+        int offset = (page - 1) * rowsPerPage;
+
+        PagedList<Url> pagedUrls = new QUrl()
+                .setFirstRow(offset)
+                .setMaxRows(rowsPerPage)
+                .orderBy().id.asc()
+                .findPagedList();
+
+        List<Url> urls = pagedUrls.getList();
+
+        int lastPage = pagedUrls.getTotalPageCount() + 1;
+        int currentPage = pagedUrls.getPageIndex() + 1;
+        List<Integer> pages = IntStream
+                .range(1, lastPage)
+                .boxed()
+                .toList();
 
         ctx.attribute("urls", urls);
+        ctx.attribute("pages", pages);
+        ctx.attribute("currentPage", currentPage);
         ctx.render("urls/index.html");
     };
 
