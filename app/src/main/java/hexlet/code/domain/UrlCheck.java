@@ -11,7 +11,7 @@ import io.ebean.annotation.NotNull;
 import io.ebean.annotation.WhenCreated;
 
 @Entity
-public class UrlCheck extends Model {
+public final class UrlCheck extends Model {
 
     @Id
     private long id;
