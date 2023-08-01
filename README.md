@@ -5,9 +5,9 @@
 
 # Page analyzer
 ## Description
-[Page analyzer](https://vasilyevps-page-analyzer.onrender.com) ñ a website that analyzes the specified pages for SEO suitability.
+[Page analyzer](https://vasilyevps-page-analyzer.onrender.com) ‚Äì a website that analyzes the specified pages for SEO suitability.
 
-The main page (tab *√Î‡‚Ì‡ˇ*) allows to add website site, that needs to be checked, to the database. The *—‡ÈÚ˚* tab contains a list of all sites and brief information about the last check.
+The main page (tab *–ì–ª–∞–≤–Ω–∞—è*) allows to add website site, that needs to be checked, to the database. The *–°–∞–π—Ç—ã* tab contains a list of all sites and brief information about the last check.
 Click on the site shows information about it: a list of all previous checks with statuses, as well as necessary for SEO information. It also allows to start new check.
 
 ## How to run locally
