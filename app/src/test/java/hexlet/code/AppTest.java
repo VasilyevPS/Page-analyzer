@@ -210,6 +210,6 @@ class AppTest {
                 .asString();
 
         assertThat(response.getStatus()).isEqualTo(200);
-        assertThat(response.getBody()).contains("Exception");
+        assertThat(response.getBody()).contains("Некорректный адрес");
     }
 }
